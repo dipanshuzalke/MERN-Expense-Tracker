@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <title>Expense Tracker</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <h2>Expense Management</h2>
+      <div>
+        <button href="/logout" id="logoutButton">
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div id="income-section">
+        <label for="income">Monthly Income:</label>
+        <input type="number" id="income" required />
+        <button id="set-income-button">Set Income</button>
+        <button id="next-month-button" style="display: none">
+          Add Next Month Income
+        </button>
+      </div>
+      <br />
+      <div id="display-income" style="display: none">
+        <h2>Your Monthly Income: <span id="income-display"></span></h2>
+      </div>
+
+      <form id="expense-form" style="display: none">
+        <label for="food-expense">Food Expense:</label>
+        <input type="number" id="food-expense" required /><br />
+
+        <label for="education-expense">Education Expense:</label>
+        <input type="number" id="education-expense" required /><br />
+
+        <label for="shopping-expense">Shopping Expense:</label>
+        <input type="number" id="shopping-expense" required /><br />
+
+        <label for="entertainment-expense">Entertainment Expense:</label>
+        <input type="number" id="entertainment-expense" required /><br />
+
+        <label for="others-expense">Other Expenses:</label>
+        <input type="number" id="others-expense" required /><br />
+
+        <button type="submit">Submit Expenses</button>
+      </form>
+
+      <div id="expense-limits">
+        <h3>Expense Limits</h3>
+        <ul>
+          <li>Food: <span id="food-limit"></span></li>
+          <li>Education: <span id="education-limit"></span></li>
+          <li>Shopping: <span id="shopping-limit"></span></li>
+          <li>Entertainment: <span id="entertainment-limit"></span></li>
+          <li>Others: <span id="others-limit"></span></li>
+        </ul>
+      </div>
+
+      <div id="alert-message"></div>
+      <br />
+      <h2>Weekly Expenses</h2>
+      <table id="weekly-expense-table">
+        <thead>
+          <tr>
+            <th>Week</th>
+            <th>Food</th>
+            <th>Education</th>
+            <th>Shopping</th>
+            <th>Entertainment</th>
+            <th>Others</th>
+            <th>Savings</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <br />
+      <h2>Expense Breakdown</h2>
+      <canvas id="expenseChart" width="600" height="600"></canvas>
+      <div class="chart">
+        <canvas id="monthlyExpenseBarChart" width="400" height="400"></canvas>
+        <canvas id="weeklyExpenseLineChart" width="400" height="400"></canvas>
+      </div>
+    </div>
+    <div class="footer">
+      <p>&copy; 2024 Expense Tracker. All rights reserved.</p>
+    </div>
+
+    <script>
+
+      // Show the logout button if the user is logged in
+      function showLogoutButton() {
+        if (localStorage.getItem("isLoggedIn") === "true") {
+          document.getElementById("logoutButton").style.display = "block";
+        }
+      }
+      window.onload = showLogoutButton;
+
+      // Handle logout
+      document
+        .getElementById("logoutButton")
+        .addEventListener("click", function () {
+          // Remove the login status from localStorage
+          localStorage.removeItem("isLoggedIn");
+          alert("You have logged out successfully.");
+          // Redirect to login page
+          window.location.href = "login3.html"; // Assuming 'login.html' is your login page
+        });
+    </script>
+
+    <script src="script.js"></script>
+  </body>
+</html>

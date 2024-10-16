@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="login3.css">
+</head>
+<body>
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form id="signupForm">
+            <h1>Create Account</h1>
+            <div class="social-container">
+                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your email for registration</span>
+            <input type="text" placeholder="Name" />
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <button>Sign Up</button>
+        </form>
+    </div>
+
+    <div class="form-container sign-in-container">
+        <form id="loginForm">
+            <h1>Sign in</h1>
+            <div class="social-container">
+                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <span>or use your account</span>
+            <input type="email" id="email" placeholder="Email" />
+            <input type="password" id="password" placeholder="Password" />
+            <a href="#">Forgot your password?</a>
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>To keep connected with us please login with your personal info</p>
+                <button class="ghost" id="signIn">Sign In</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Hello, Friend!</h1>
+                <p>Enter your personal details and start your journey with us</p>
+                <button class="ghost" id="signUp">Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	// Get elements
+const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
+
+// Toggle between sign-up and sign-in panels
+signUpButton.addEventListener('click', () => {
+	container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener('click', () => {
+	container.classList.remove("right-panel-active");
+});
+
+// Sign-up functionality
+const signUpForm = document.querySelector('.sign-up-container form');
+signUpForm.addEventListener('submit', function(e) {
+	e.preventDefault();
+	const name = signUpForm.querySelector('input[placeholder="Name"]').value;
+	const email = signUpForm.querySelector('input[placeholder="Email"]').value;
+	const password = signUpForm.querySelector('input[placeholder="Password"]').value;
+	
+	if (name && email && password) {
+		let users = JSON.parse(localStorage.getItem('users')) || [];
+		
+		// Check if user already exists
+		if (users.some(user => user.email === email)) {
+			alert("User already exists with this email.");
+			return;
+		}
+		
+		// Add user to the "mock database"
+		users.push({ name, email, password });
+		localStorage.setItem('users', JSON.stringify(users));
+		alert('Account created successfully! Please sign in.');
+		signInButton.click(); // Switch to the sign-in panel after successful sign-up
+	} else {
+		alert('Please fill in all fields.');
+	}
+});
+
+// Sign-in functionality
+// Sign-in functionality
+const signInForm = document.querySelector('.sign-in-container form');
+signInForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = signInForm.querySelector('input[placeholder="Email"]').value;
+    const password = signInForm.querySelector('input[placeholder="Password"]').value;
+
+    if (email && password) {
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Check if user exists and password matches
+        const user = users.find(user => user.email === email && user.password === password);
+        if (user) {
+            alert(`Welcome back, ${user.name}!`);
+            // Redirect to index.html after successful login
+            window.location.href = 'index.html';
+        } else {
+            alert('Invalid email or password.');
+        }
+    } else {
+        alert('Please fill in all fields.');
+    }
+});
+
+
+// // Simulate login authentication (replace this with real backend login API calls)
+// const mockLogin = (email, password) => {
+//     return email === "test@example.com" && password === "password123";
+// };
+
+// // Listen to form submission for login
+// document.getElementById('loginForm').addEventListener('submit', (e) => {
+//     e.preventDefault();
+//     const email = document.getElementById('email').value;
+//     const password = document.getElementById('password').value;
+
+//     // Call the mock login function or real backend API
+//     if (mockLogin(email, password)) {
+//         alert("Login successful!");
+//         // Save login status in localStorage
+//         localStorage.setItem('isLoggedIn', true);
+//         // Redirect to index.html upon successful login
+//         window.location.href = '/index.html';
+//     } else {
+//         alert("Invalid login credentials. Please try again.");
+//     }
+// });
+
+
+</script>
+
+<script src="login3.js"></script>
+</body>
+</html>
